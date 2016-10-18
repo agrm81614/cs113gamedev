@@ -2,6 +2,7 @@
 <script>
 //Quadrix Core Gameplay
 //We will launch right into gameplay. The final product should have a Splash/Start welcome screen.
+//Going to initially design with a fixed size to make implementation easier. (800x600 or 1024x768? will test)
 
 //1. Draw Game map / Initialize keyboard controls
 //2. Start spawning blocks
@@ -14,9 +15,21 @@ $(document).ready(function(){
 		//Core render loop
 		var ctx = document.getElementById('quadrix').getContext('2d');
 
+		//Draw a small border around the canvas.
+		ctx.strokeRect(0, 0, 800, 600);
+		
 		//Draw safe-zone
-		//x=400, y=200, width=100, height=100
-		ctx.strokeRect(400, 200, 100, 100);
+		//x=400, y=200, width=120, height=120
+		ctx.strokeRect(325, 225, 120, 120);
+		
+		//Draw large borders for each quadrant.
+		//Northwest
+		
+		//Northeast
+		
+		//Southwest
+		
+		//Southeast
 
 		window.requestAnimationFrame(render);
 	}

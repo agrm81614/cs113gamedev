@@ -1,67 +1,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="application/javascript">
-$( document ).ready(function() {
-	// START MOZILLA EXAMPLE
-	var sun = new Image();
-	var moon = new Image();
-	var earth = new Image();
-	function init(){
-	  sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
-	  moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
-	  earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
-	  window.requestAnimationFrame(draw);
+<script>
+//Quadrix Core Gameplay
+//We will launch right into gameplay. The final product should have a Splash/Start welcome screen.
+
+$(document).ready(function(){
+	function initQuadrix(){
+		window.requestAnimationFrame(render);
 	}
+	function render() {
+	  var ctx = document.getElementById('quadrix').getContext('2d');
 
-	function draw() {
-	  var ctx = document.getElementById('canvas').getContext('2d');
+	  //Draw safe-zone
+	  //x=400, y=200, width=100, height=100
+	  ctx.strokeRect(400, 200, 100, 100);
 
-	  ctx.globalCompositeOperation = 'destination-over';
-	  ctx.clearRect(0,0,300,300); // clear canvas
-
-	  ctx.fillStyle = 'rgba(0,0,0,0.4)';
-	  ctx.strokeStyle = 'rgba(0,153,255,0.4)';
-	  ctx.save();
-	  ctx.translate(150,150);
-
-	  // Earth
-	  var time = new Date();
-	  ctx.rotate( ((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds() );
-	  ctx.translate(105,0);
-	  ctx.fillRect(0,-12,50,24); // Shadow
-	  ctx.drawImage(earth,-12,-12);
-
-	  // Moon
-	  ctx.save();
-	  ctx.rotate( ((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds() );
-	  ctx.translate(0,28.5);
-	  ctx.drawImage(moon,-3.5,-3.5);
-	  ctx.restore();
-
-	  ctx.restore();
-	  
-	  ctx.beginPath();
-	  ctx.arc(150,150,105,0,Math.PI*2,false); // Earth orbit
-	  ctx.stroke();
-	 
-	  ctx.drawImage(sun,0,0,300,300);
-
-	  window.requestAnimationFrame(draw);
+	  window.requestAnimationFrame(render);
 	}
-
-	init();
-	// END MOZILLA EXAMPLE
+	initQuadrix();
 	
-	// Needs to be an 2D array representing the map. Will we have "borders" in the corner? That is where this is initialized.
-	// initializeMap();
+	
 
-	var mapData = [[]];
-
-	function initializeMap(){
-		// Height and Width in BLOCKS
-		var width = 300;
-	}
-
+	console.log("quadrix loaded");
 });
 </script>
 
-<canvas id="canvas" width="300" height="300"></canvas>
+Quadrix:<p>
+<canvas id="quadrix" width="800" height="600"></canvas>

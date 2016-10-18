@@ -15,8 +15,9 @@ $(document).ready(function(){
 		//Core render loop
 		var ctx = document.getElementById('quadrix').getContext('2d');
 
+		//1. Draw game board
 		//Draw a small border around the canvas.
-		ctx.strokeRect(0, 0, 800, 600);
+		ctx.strokeRect(0, 0, 1024, 768);
 		
 		//Draw safe-zone
 		//x=400, y=200, width=120, height=120
@@ -30,7 +31,11 @@ $(document).ready(function(){
 		//Southwest
 		
 		//Southeast
+		
+		//2. Draw every piece.
 
+		
+		//Asynchronous render (very smooth)
 		window.requestAnimationFrame(render);
 	}
 	initQuadrix();
@@ -42,4 +47,4 @@ $(document).ready(function(){
 </script>
 
 Quadrix:<p>
-<canvas id="quadrix" width="800" height="600"></canvas>
+<canvas id="quadrix" width="1024" height="768"></canvas>

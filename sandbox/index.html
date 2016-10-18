@@ -3,18 +3,22 @@
 //Quadrix Core Gameplay
 //We will launch right into gameplay. The final product should have a Splash/Start welcome screen.
 
+//1. Draw Game map / Initialize keyboard controls
+//2. Start spawning blocks
+
 $(document).ready(function(){
 	function initQuadrix(){
 		window.requestAnimationFrame(render);
 	}
 	function render() {
-	  var ctx = document.getElementById('quadrix').getContext('2d');
+		//Core render loop
+		var ctx = document.getElementById('quadrix').getContext('2d');
 
-	  //Draw safe-zone
-	  //x=400, y=200, width=100, height=100
-	  ctx.strokeRect(400, 200, 100, 100);
+		//Draw safe-zone
+		//x=400, y=200, width=100, height=100
+		ctx.strokeRect(400, 200, 100, 100);
 
-	  window.requestAnimationFrame(render);
+		window.requestAnimationFrame(render);
 	}
 	initQuadrix();
 	

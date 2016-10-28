@@ -1,0 +1,12 @@
+html { background: #3E4261; }
+#board {
+	margin: 0 auto;
+	display: block;
+	background: #CDCDCD;
+}
+#lines {
+	margin: 0 auto;
+	margin-top: 2em;
+	color: white;
+	font-size: 1.5em;
+}

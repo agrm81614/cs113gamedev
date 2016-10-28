@@ -72,8 +72,11 @@ function Piece(patterns, color) {
 
 	this.color = color;
 
-	this.x = width/2-parseInt(Math.ceil(this.pattern.length/2), 10);
-	this.y = height/2-parseInt(Math.ceil(this.pattern.length/2), 10);
+	// Uncomment these lines to have piece spawn in the middle
+	// this.x = width/2-parseInt(Math.ceil(this.pattern.length/2), 10);
+	this.x = 5;
+	// this.y = height/2-parseInt(Math.ceil(this.pattern.length/2), 10);
+	this.y = -2;
 }
 
 Piece.prototype.rotate = function() {
@@ -247,18 +250,18 @@ function key(k) {
 	if (done) {
 		return;
 	}
-	if (k == 38) { // Player pressed up
+	if (k == 38 || k == 87) { // Player pressed up W
 		piece.rotate();
 		dropStart = Date.now();
 	}
-	if (k == 40) { // Player holding down
+	if (k == 40 || k == 83) { // Player holding down S
 		piece.down();
 	}
-	if (k == 37) { // Player holding left
+	if (k == 37 || k == 65) { // Player holding left A
 		piece.moveLeft();
 		dropStart = Date.now();
 	}
-	if (k == 39) { // Player holding right
+	if (k == 39 || k == 68) { // Player holding right D
 		piece.moveRight();
 		dropStart = Date.now();
 	}

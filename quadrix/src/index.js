@@ -10,3 +10,7 @@ exports.rootComponent = ReactDOM.render(
 exports.serialize = function() {
   return ComponentTree.serialize(exports.rootComponent);
 };
+
+var NorthBoard = ReactDOM.render(
+    React.createElement(FlatrisStatePersistor, {}),
+    document.getElementById('north'));

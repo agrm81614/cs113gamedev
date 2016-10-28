@@ -67,8 +67,9 @@ class FlatrisStatePersistor extends ComponentTree.Component {
   }
 
   onUnload() {
-    var snapshot = ComponentTree.serialize(this.refs.flatris);
-    localStorage.setItem('flatrisState1', JSON.stringify(snapshot.state));
+    // Don't want to save state between refreshes. -mmorrell
+	//var snapshot = ComponentTree.serialize(this.refs.flatris);
+    //localStorage.setItem('flatrisState1', JSON.stringify(snapshot.state));
   }
 }
 

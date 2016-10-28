@@ -1,50 +1,32 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script>
-//Quadrix Core Gameplay
-//We will launch right into gameplay. The final product should have a Splash/Start welcome screen.
-//Going to initially design with a fixed size to make implementation easier. (800x600 or 1024x768? will test)
-
-//1. Draw Game map / Initialize keyboard controls
-//2. Start spawning blocks
-
-$(document).ready(function(){
-	function initQuadrix(){
-		window.requestAnimationFrame(render);
-	}
-	function render() {
-		//Core render loop
-		var ctx = document.getElementById('quadrix').getContext('2d');
-
-		//1. Draw game board
-		//Draw a small border around the canvas.
-		ctx.strokeRect(0, 0, 1024, 768);
-		
-		//Draw safe-zone
-		//x=400, y=200, width=120, height=120
-		ctx.strokeRect(325, 225, 120, 120);
-		
-		//Draw large borders for each quadrant.
-		//Northwest
-		
-		//Northeast
-		
-		//Southwest
-		
-		//Southeast
-		
-		//2. Draw every piece.
-
-		
-		//Asynchronous render (very smooth)
-		window.requestAnimationFrame(render);
-	}
-	initQuadrix();
-	
-	
-
-	console.log("quadrix loaded");
-});
-</script>
-
-Quadrix:<p>
-<canvas id="quadrix" width="1024" height="768"></canvas>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>My Little Tetris</title>
+		<style>
+			html { background: #F7F7F7; }
+			#board {
+				margin: 0 auto;
+				display: block;
+				border: 2px solid black;
+				border-bottom: 5px solid green;
+				background: white;
+			}
+			#lines {
+				display: block;
+				width: 240px;
+				margin: 0 auto;
+				margin-top: 2em;
+				color: #444;
+				font-size: 1.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<span id="lines">Lines: 0</span>
+		<canvas id="board">
+		</canvas>
+		<script src="tetrominoes.js"></script>
+		<script src="tetris.js"></script>
+	</body>
+</html>

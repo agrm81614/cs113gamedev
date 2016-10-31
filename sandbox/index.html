@@ -60,6 +60,8 @@ $(document).ready(function(){
 		//Southeast
 		ctx.fillRect(494, 494, 304, 304);
 		
+		//1.5 draw grid for each well
+		
 		//2. Draw every piece.
 
 		
@@ -74,6 +76,30 @@ $(document).ready(function(){
 	$("#spawnPiece").click(function() {
 	  alert("piece spawn event");
 	});
+		
+});
+
+$(document).keydown(function(e) {
+    switch(e.which) {
+        case 37: // left
+			alert("left");
+        break;
+
+        case 38: // up
+			alert("up");
+        break;
+
+        case 39: // right
+			alert("right");
+        break;
+
+        case 40: // down
+			alert("down");
+        break;
+
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
 });
 
 
@@ -96,4 +122,4 @@ Current Side: <span id="currentSide"></span><br/>
 </th>
 </tr>
 </table>
-<canvas id="quadrix" width="798" height="798"></canvas>
+<div id="canvasWrapper" style="border:1px solid;"><canvas id="quadrix" width="798" height="798"></canvas></div>

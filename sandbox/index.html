@@ -15,6 +15,7 @@ table, th, td {
 
 
 var gameState = "ended";
+var currentSide = "south";
 var currentTetrimino = 1;
 var nextTetrimino = 6;
 
@@ -29,6 +30,7 @@ $(document).ready(function(){
 		$("#gameState").text(gameState);
 		$("#currentTetrimino").text(currentTetrimino);
 		$("#nextTetrimino").text(nextTetrimino);
+		$("#currentSide").text(currentSide);
 		
 		//Tetrimino status
 		
@@ -83,8 +85,9 @@ Quadrix:<p>
 <tr>
 <th>
 Game State: <span id="gameState"></span><br/>
-Current Falling Tetrimino: <span id="currentTetrimino">Type1</span><br/>
-Next Falling Tetrimino: <span id="nextTetrimino">Type6</span><br/>
+Current Falling Tetrimino: <span id="currentTetrimino"></span><br/>
+Next Falling Tetrimino: <span id="nextTetrimino"></span><br/>
+Current Side: <span id="currentSide"></span><br/>
 </th>
 <th>
 <input id="spawnPiece" type="button" value="Spawn Piece"/>

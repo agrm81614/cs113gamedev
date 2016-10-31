@@ -1,3 +1,8 @@
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 //Quadrix Core Gameplay
@@ -64,13 +69,28 @@ $(document).ready(function(){
 	
 
 	console.log("quadrix loaded");
+	$("#spawnPiece").click(function() {
+	  alert("piece spawn event");
+	});
 });
+
+
+
 </script>
 
 Quadrix:<p>
-<div id="status">
+<table id="status" border=1>
+<tr>
+<th>
 Game State: <span id="gameState"></span><br/>
 Current Falling Tetrimino: <span id="currentTetrimino">Type1</span><br/>
-Next Falling Tetrimino: <span id="nextTetrimino">Type6</span><br/><br/>
-</div>
+Next Falling Tetrimino: <span id="nextTetrimino">Type6</span><br/>
+</th>
+<th>
+<input id="spawnPiece" type="button" value="Spawn Piece"/>
+<input id="startGame" type="button" value="Start Game"/>
+<input id="pauseGame" type="button" value="Pause Game"/>
+</th>
+</tr>
+</table>
 <canvas id="quadrix" width="798" height="798"></canvas>

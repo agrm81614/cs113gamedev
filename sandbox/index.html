@@ -6,31 +6,52 @@
 
 //1. Draw Game map / Initialize keyboard controls
 //2. Start spawning blocks
+//
+
+
+var gameState = "ended";
+var currentTetrimino = 1;
+var nextTetrimino = 6;
 
 $(document).ready(function(){
 	function initQuadrix(){
 		window.requestAnimationFrame(render);
 	}
 	function render() {
+		
+		//Update Game State/Information Display
+		//Current State (Ended/Playing/Paused)
+		$("#gameState").text(gameState);
+		$("#currentTetrimino").text(currentTetrimino);
+		$("#nextTetrimino").text(nextTetrimino);
+		
+		//Tetrimino status
+		
+	
+	
 		//Core render loop
 		var ctx = document.getElementById('quadrix').getContext('2d');
 
 		//1. Draw game board
 		//Draw a small border around the canvas.
-		ctx.strokeRect(0, 0, 1024, 768);
+		ctx.strokeRect(0, 0, 798, 798);
 		
 		//Draw safe-zone
 		//x=400, y=200, width=120, height=120
-		ctx.strokeRect(325, 225, 120, 120);
+		ctx.strokeRect(304, 304, 190, 190);
 		
-		//Draw large borders for each quadrant.
+		//Draw large borders for each quadrant.		
 		//Northwest
+		ctx.fillRect(0, 0, 304, 304);
 		
 		//Northeast
+		ctx.fillRect(494, 0, 304, 304);
 		
 		//Southwest
+		ctx.fillRect(0, 494, 304, 304);
 		
 		//Southeast
+		ctx.fillRect(494, 494, 304, 304);
 		
 		//2. Draw every piece.
 
@@ -47,4 +68,9 @@ $(document).ready(function(){
 </script>
 
 Quadrix:<p>
-<canvas id="quadrix" width="1024" height="768"></canvas>
+<div id="status">
+Game State: <span id="gameState"></span><br/>
+Current Falling Tetrimino: <span id="currentTetrimino">Type1</span><br/>
+Next Falling Tetrimino: <span id="nextTetrimino">Type6</span><br/><br/>
+</div>
+<canvas id="quadrix" width="798" height="798"></canvas>

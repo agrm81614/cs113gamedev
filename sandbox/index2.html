@@ -4,6 +4,9 @@
     body      { font-family: Helvetica, sans-serif; }
     #stats    { display: inline-block; vertical-align: top; }
     #southCanvas   { display: inline-block; vertical-align: top; background: url(texture.jpg);}
+	#eastCanvas   { display: inline-block; vertical-align: top; background: url(texture.jpg);}
+	#northCanvas   { display: inline-block; vertical-align: top; background: url(texture.jpg);}
+	#westCanvas   { display: inline-block; vertical-align: top; background: url(texture.jpg);}
     #menu     { display: inline-block; vertical-align: top; position: relative; }
     #score    { color: red; font-weight: bold; vertical-align: middle; }
     #rows     { color: blue; font-weight: bold; vertical-align: middle; }
@@ -55,26 +58,34 @@
 <div class="divTableBody">
 <div class="divTableRow">
 <div class="divTableCell" id="rainbow"></div>
-<div class="divTableCell">north</div>
+<div class="divTableCell">
+<canvas id="northCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+</div>
 <div class="divTableCell">      <p>score <span id="score">00000</span></p>
       <p>rows <span id="rows">0</span></p>
 </div>
 </div>
 <div class="divTableRow">
-<div class="divTableCell">west</div>
+<div class="divTableCell">
+<canvas id="westCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+</div>
 <div class="divTableCell">
 <p><canvas id="upcoming"></canvas></p>
-<div id="menu">
-      <p id="start"><a href="javascript:play();">Press Space to Play.</a></p>
-    </div></div>
-<div class="divTableCell"><canvas id="eastCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+	<div id="menu">
+		<p id="start"><a href="javascript:play();">Press Space to Play.</a></p>
+	</div>
+</div>
+<div class="divTableCell">
+<canvas id="eastCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
 </div>
 </div>
 <div class="divTableRow">
 <div class="divTableCell" id="rainbow">&nbsp;</div>
-<div class="divTableCell"><div id="tetris">
+<div class="divTableCell">
+<div id="tetris">
 <canvas id="southCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
-  </div></div>
+</div>
+</div>
 <div class="divTableCell" id="rainbow">&nbsp;</div>
 </div>
 </div>
@@ -114,12 +125,18 @@
         DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
         stats   = new Stats(),
         canvas  = get('southCanvas'),
+		eastCanvas = get('eastCanvas'),
+		northCanvas = get('northCanvas'),
+		westCanvas = get('westCanvas'),
         ctx     = canvas.getContext('2d'),
+		eastCtx     = eastCanvas.getContext('2d'),
+		northCtx     = northCanvas.getContext('2d'),
+		westCtx     = westCanvas.getContext('2d'),
         ucanvas = get('upcoming'),
         uctx    = ucanvas.getContext('2d'),
         speed   = { start: 0.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
         nx      = 10, // width of tetris court (in blocks)
-        ny      = 20, // height of tetris court (in blocks)
+        ny      = 10, // height of tetris court (in blocks)
         nu      = 5;  // width/height of upcoming preview (in blocks)
 
     //-------------------------------------------------------------------------

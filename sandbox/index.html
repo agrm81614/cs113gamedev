@@ -74,7 +74,7 @@ $(document).ready(function(){
 
 	console.log("quadrix loaded");
 	$("#spawnPiece").click(function() {
-	  alert("piece spawn event");
+	  spawnPiece();
 	});
 		
 });
@@ -101,6 +101,10 @@ $(document).keydown(function(e) {
     }
     e.preventDefault(); // prevent the default action (scroll / move caret)
 });
+
+function spawnPiece(){
+	alert("piece spawned");
+}
 
 
 

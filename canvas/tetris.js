@@ -253,7 +253,7 @@ function pauseTextController() {
 	}
 	else {
 		document.getElementById("pause").style.display = "none";
-	}
+	} 
 }
 
 function key(k) {

@@ -246,26 +246,43 @@ document.body.addEventListener("keyup", function (e) {
 	downI[e.keyCode] = null;
 }, false);
 
+var pause = false;
+function pauseTextController() {
+	if (pause) {
+		document.getElementById("pause").style.display = "inline";
+	}
+	else {
+		document.getElementById("pause").style.display = "none";
+	}
+}
+
 function key(k) {
 	if (done) {
 		return;
 	}
-	if (k == 38 || k == 87) { // Player pressed up W
-		piece.rotate();
-		dropStart = Date.now();
+	if (k == 80) {
+		pause = !pause;
+		pauseTextController();
 	}
-	if (k == 40 || k == 83) { // Player holding down S
-		piece.down();
+		
+	if (!pause) {
+		if (k == 38 || k == 87) { // Player pressed up W
+			piece.rotate();
+			dropStart = Date.now();
+		}
+		if (k == 40 || k == 83) { // Player holding down S
+			piece.down();
+		}
+		if (k == 37 || k == 65) { // Player holding left A
+			piece.moveLeft();
+			dropStart = Date.now();
+		}
+		if (k == 39 || k == 68) { // Player holding right D
+			piece.moveRight();
+			dropStart = Date.now();
+		}
 	}
-	if (k == 37 || k == 65) { // Player holding left A
-		piece.moveLeft();
-		dropStart = Date.now();
-	}
-	if (k == 39 || k == 68) { // Player holding right D
-		piece.moveRight();
-		dropStart = Date.now();
-	}
-}
+}	
 
 function drawBoard() {
 	var fs = ctx.fillStyle;
@@ -276,13 +293,14 @@ function drawBoard() {
 		}
 	}
 	ctx.fillStyle = fs;
+	document.getElementById("pause").style.display = "none";
 }
 
 function main() {
 	var now = Date.now();
 	var delta = now - dropStart;
 
-	if (delta > 1000) {
+	if (delta > 1000 && !pause) {
 		piece.down();
 		dropStart = now;
 	}

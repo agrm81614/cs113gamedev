@@ -10,6 +10,8 @@
     #menu     { display: inline-block; vertical-align: top; position: relative; }
     #score    { color: red; font-weight: bold; vertical-align: middle; }
     #rows     { color: blue; font-weight: bold; vertical-align: middle; }
+	#powerup     { color: green; font-weight: bold; vertical-align: middle; }
+	#direction     { color: purple; font-weight: bold; vertical-align: middle; }
     #stats    { position: absolute; bottom: 0em; right: 1em; visibility: hidden; }
 	.divTable{
 	display: table;
@@ -54,7 +56,7 @@
   }
   </style>
 <h1>Quadrix</h1>
-<h2>by Neoretro Games</h2>b 
+<h2>by Neoretro Games</h2>
 <div class="divTable">
 <div class="divTableBody">
 <div class="divTableRow">
@@ -62,8 +64,11 @@
 <div class="divTableCell">
 <canvas id="northCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
 </div>
-<div class="divTableCell">      <p>score <span id="score">00000</span></p>
-      <p>rows <span id="rows">0</span></p>
+<div class="divTableCell">
+<p>Score: <span id="score">00000</span>
+<br>Rows: <span id="rows">0</span>
+<br>Power-Up: <span id="powerup">None</span>
+<br>Direction: <span id="direction">South</span>
 </div>
 </div>
 <div class="divTableRow">

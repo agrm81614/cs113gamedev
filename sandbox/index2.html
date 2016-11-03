@@ -193,7 +193,7 @@
       var bit, result, row = 0, col = 0, blocks = type.blocks[dir];
       for(bit = 0x8000 ; bit > 0 ; bit = bit >> 1) {
         if (blocks & bit) {
-          fn(x + col, y + row);
+          fn(x + col, y + row);  //fn(x, y) = setBlock(x, y, current.type)
         }
         if (++col === 4) {
           col = 0;

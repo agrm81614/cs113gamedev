@@ -4,6 +4,12 @@ h1, h2 {
 
 body {
     font-family: Helvetica, sans-serif;
+    background: #464453;
+}
+
+a{
+  color: #F9F902;
+  text-decoration: none;
 }
 
 #stats {
@@ -14,27 +20,27 @@ body {
 #southCanvas {
     display: inline-block;
     vertical-align: top;
-    background: url(texture.jpg);
+    /*background: url(texture.jpg);*/
 }
 
 #eastCanvas {
     display: inline-block;
     vertical-align: top;
-    background: url(texture.jpg);
+    /*background: url(texture.jpg);*/
     transform: rotate(90deg);
 }
 
 #northCanvas {
     display: inline-block;
     vertical-align: top;
-    background: url(texture.jpg);
+    /*background: url(texture.jpg);*/
     transform: rotate(180deg);
 }
 
 #westCanvas {
     display: inline-block;
     vertical-align: top;
-    background: url(texture.jpg);
+    /*background: url(texture.jpg);*/
     transform: rotate(270deg);
 }
 
@@ -112,14 +118,5 @@ body {
 }
 
 #rainbow {
-    background: red;
-    /* For browsers that do not support gradients */
-    /* For Safari 5.1 to 6.0 */
-    background: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet);
-    /* For Opera 11.1 to 12.0 */
-    background: -o-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet);
-    /* For Fx 3.6 to 15 */
-    background: -moz-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet);
-    /* Standard syntax */
-    background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet);
+    background: black;
 }

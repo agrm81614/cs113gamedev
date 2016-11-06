@@ -1,21 +1,11 @@
-h1, h2 {
-    text-align: center;
-}
-
 body {
-    font-family: Helvetica, sans-serif;
     background: #464453;
 }
 
-a{
-  color: #F9F902;
-  text-decoration: none;
-}
-
-#stats {
+/*#stats {
     display: inline-block;
     vertical-align: top;
-}
+}*/
 
 #southCanvas {
     display: inline-block;
@@ -48,30 +38,6 @@ a{
     display: inline-block;
     vertical-align: top;
     position: relative;
-}
-
-#score {
-    color: red;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
-#rows {
-    color: blue;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
-#powerup {
-    color: green;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
-#direction {
-    color: purple;
-    font-weight: bold;
-    vertical-align: middle;
 }
 
 #stats {
@@ -115,8 +81,4 @@ a{
 
 .divTableBody {
     display: table-row-group;
-}
-
-#rainbow {
-    background: black;
 }

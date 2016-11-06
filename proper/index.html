@@ -1,50 +1,72 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-	<link rel="stylesheet" href="stylesheet.css" media="screen" title="no title">
+	<meta charset="UTF-8">
+	<title>Quadrix</title>
+	<link rel="stylesheet" href="css/stylesheet.css" media="screen" title="no title">
+	<link rel="stylesheet" href="css/tachyons.min.css" media="screen" title="no title">
 </head>
 
-<h1>Quadrix</h1>
-<h2>by Neoretro Games</h2>
-<div class="divTable">
-<div class="divTableBody">
-<div class="divTableRow">
-<div class="divTableCell" id="rainbow"></div>
-<div class="divTableCell">
-<canvas id="northCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
-</div>
-<div class="divTableCell">
-<p>Score: <span id="score">00000</span>
-<br>Rows: <span id="rows">0</span>
-<br>Power-Up: <span id="powerup">None</span>
-<br>Direction: <span id="direction">South</span>
-</div>
-</div>
-<div class="divTableRow">
-<div class="divTableCell">
-<canvas id="westCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
-</div>
-<div class="divTableCell">
-<p><canvas id="upcoming"></canvas></p>
-	<div id="menu">
-		<p id="start"><a href="javascript:play();">Press Space to Play.</a></p>
+<body class="">
+	<h1 class="tc f2 black mt0 pv2 bg-green">Quadrix</h1>
+
+	<div class="divTable">
+
+		<div class="divTableBody">
+
+			<div class="divTableRow">
+				<div class="divTableCell bg-black"></div>
+				<div class="divTableCell bg-gray">
+					<canvas class="bg-white" id="northCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+				</div>
+				<div class="divTableCell bg-black">
+					<p class="white">
+						Score: <span class="fr red b" id="score">00000</span>
+						<br>
+						Rows: <span class="fr blue b" id="rows">0</span>
+						<br>
+						Power-Up: <span class="fr green b" id="powerup">None</span>
+						<br>
+						Direction: <span class="fr purple b" id="direction">South</span>
+					</p>
+				</div>
+			</div>
+
+
+			<div class="divTableRow">
+				<div class="divTableCell bg-gray">
+					<canvas class="bg-white" id="westCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+				</div>
+				<div class="divTableCell bg-black">
+					<!-- TODO remove p wrapper and fix layout -->
+					<p><canvas id="upcoming"></canvas></p>
+					<div id="menu">
+						<p id="start"><a class="link yellow" href="javascript:play();">Press Space to Play</a></p>
+					</div>
+				</div>
+				<div class="divTableCell bg-gray">
+					<canvas class="bg-white" id="eastCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+				</div>
+			</div>
+
+
+			<div class="divTableRow">
+				<div class="divTableCell bg-black"></div>
+				<div class="divTableCell bg-gray">
+					<div id="tetris">
+						<canvas class="bg-white" id="southCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
+					</div>
+				</div>
+				<div class="divTableCell bg-black"></div>
+			</div>
+
+
+		</div>
 	</div>
-</div>
-<div class="divTableCell">
-<canvas id="eastCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
-</div>
-</div>
-<div class="divTableRow">
-<div class="divTableCell" id="rainbow">&nbsp;</div>
-<div class="divTableCell">
-<div id="tetris">
-<canvas id="southCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
-</div>
-</div>
-<div class="divTableCell" id="rainbow">&nbsp;</div>
-</div>
-</div>
-</div>
+</body>
 
 <!-- <script src="stats.js"></script> -->
 <script type="text/javascript" src="quadrix.js"></script>
+
+</html>

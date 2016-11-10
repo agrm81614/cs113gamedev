@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40 },
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80},
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -57,8 +57,8 @@ var dx, dy,        // pixel size of a single tetris block
 		score,         // the current score
 		vscore,        // the currently displayed score (it catches up to score in small chunks - like a spinning slot machine)
 		rows,          // number of completed rows in the current game
-		step;          // how long before current piece drops by 1 row
-
+		step,          // how long before current piece drops by 1 row
+		pause;		   // true|false - game is paused
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -177,21 +177,28 @@ function resize(event) {
 
 function keydown(ev) {
 	var handled = false;
-	if (playing) {
-		switch(ev.keyCode) {
-			case KEY.LEFT:   actions.push(DIR.LEFT);  handled = true; break;
-			case KEY.RIGHT:  actions.push(DIR.RIGHT); handled = true; break;
-			case KEY.UP:     actions.push(DIR.UP);    handled = true; break;
-			case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
-			case KEY.ESC:    lose();                  handled = true; break;
+	if (!pause) {
+		if (playing) {
+			switch(ev.keyCode) {
+				case KEY.LEFT:   actions.push(DIR.LEFT);  handled = true; break;
+				case KEY.RIGHT:  actions.push(DIR.RIGHT); handled = true; break;
+				case KEY.UP:     actions.push(DIR.UP);    handled = true; break;
+				case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
+				case KEY.ESC:    lose();                  handled = true; break;
+				case KEY.P:      pause = !pause;          handled = true; show('pause'); break;
+			}
+		}
+		else if (ev.keyCode == KEY.SPACE) {
+			play();
+			handled = true;
 		}
 	}
-	else if (ev.keyCode == KEY.SPACE) {
-		play();
-		handled = true;
+	else if (ev.keyCode == KEY.P) {
+		pause = !pause;
+		hide('pause');
 	}
 	if (handled)
-		ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
+			ev.preventDefault(); // prevent arrow keys from scrolling the page (supported in IE9+ and all other browsers)
 }
 
 //-------------------------------------------------------------------------
@@ -223,17 +230,20 @@ function reset() {
 	clearScore();
 	setCurrentPiece(next);
 	setNextPiece();
+	pause = false;
 }
 
 function update(idt) {
-	if (playing) {
-		if (vscore < score)
-			setVisualScore(vscore + 1);
-		handle(actions.shift());
-		dt = dt + idt;
-		if (dt > step) {
-			dt = dt - step;
-			drop();
+	if (!pause) {
+		if (playing) {
+			if (vscore < score)
+				setVisualScore(vscore + 1);
+			handle(actions.shift());
+			dt = dt + idt;
+			if (dt > step) {
+				dt = dt - step;
+				drop();
+			}
 		}
 	}
 }
@@ -404,4 +414,4 @@ function drawBlock(ctx, x, y, color) {
 // FINALLY, lets run the game
 //-------------------------------------------------------------------------
 
-run();
+run(); hide('pause');

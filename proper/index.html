@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+  <meta charset="UTF-8">
 	<title>Quadrix</title>
 	<link rel="stylesheet" href="css/stylesheet.css" media="screen" title="no title">
 	<link rel="stylesheet" href="css/tachyons.min.css" media="screen" title="no title">
@@ -17,10 +17,10 @@
 
 			<div class="divTableRow">
 				<div class="divTableCell bg-black"></div>
-				<div class="divTableCell bg-gray">
+				<div class="tc v-mid divTableCell bg-gray">
 					<canvas class="bg-white" id="northCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
 				</div>
-				<div class="divTableCell bg-black">
+				<div class="v-mid divTableCell bg-black">
 					<p class="white">
 						Score: <span class="fr red b" id="score">00000</span>
 						<br>
@@ -35,17 +35,18 @@
 
 
 			<div class="divTableRow">
-				<div class="divTableCell bg-gray">
+				<div class="v-mid tc divTableCell bg-gray">
 					<canvas class="bg-white" id="westCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
 				</div>
-				<div class="divTableCell bg-black">
-					<!-- TODO remove p wrapper and fix layout -->
-					<p><canvas id="upcoming"></canvas></p>
+				<div class="tc divTableCell bg-black">
+					<!-- TODO fix layout -->
+					<canvas id="upcoming"></canvas>
+          <br>
 					<div id="menu">
 						<p id="start"><a class="link yellow" href="javascript:play();">Press Space to Play</a></p>
 					</div>
 				</div>
-				<div class="divTableCell bg-gray">
+				<div class="v-mid tc divTableCell bg-gray">
 					<canvas class="bg-white" id="eastCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
 				</div>
 			</div>
@@ -53,10 +54,11 @@
 
 			<div class="divTableRow">
 				<div class="divTableCell bg-black"></div>
-				<div class="divTableCell bg-gray">
-					<div id="tetris">
+				<div class="tc v-mid divTableCell bg-gray">
 						<canvas class="bg-white" id="southCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
-					</div>
+          <!-- Was wrapping the above canvas, leaving just in case need. TODO: check! -->
+          <!-- <div id="tetris">
+					</div> -->
 				</div>
 				<div class="divTableCell bg-black"></div>
 			</div>

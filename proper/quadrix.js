@@ -41,7 +41,8 @@ westCtx     = westCanvas.getContext('2d'),
 		speed   = { start: 0.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
 		nx      = 10, // width of tetris court (in blocks)
 		ny      = 10, // height of tetris court (in blocks)
-		nu      = 5;  // width/height of upcoming preview (in blocks)
+		nu      = 5,  // width/height of upcoming preview (in blocks)
+		currentDirection = 'south';
 
 //-------------------------------------------------------------------------
 // game variables (initialized during reset)
@@ -58,7 +59,7 @@ var dx, dy,        // pixel size of a single tetris block
 		vscore,        // the currently displayed score (it catches up to score in small chunks - like a spinning slot machine)
 		rows,          // number of completed rows in the current game
 		step,          // how long before current piece drops by 1 row
-		pause;		   // true|false - game is paused
+		pause;         // true|false - game is paused  
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -295,12 +296,34 @@ function drop() {
 			lose();
 		}
 	}
+	// set next ctx
 }
 
 function dropPiece() {
 	eachblock(current.type, current.x, current.y, current.dir, function(x, y) {
 		setBlock(x, y, current.type);
 	});
+	
+	//set next direction
+	switch (currentDirection){
+		case 'south':
+			ctx = eastCtx;
+			currentDirection = 'east';
+			break;
+		case 'east':
+			ctx = northCtx;
+			currentDirection = 'north';
+			break;
+		case 'north':
+			ctx = westCtx;
+			currentDirection = 'west';
+			break;
+		case 'west':
+			ctx = canvas.getContext('2d');
+			currentDirection = 'south';
+			break;
+	}
+	//ctx = eastCtx;
 }
 
 function removeLines() {

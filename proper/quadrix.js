@@ -59,7 +59,11 @@ var dx, dy,        // pixel size of a single tetris block
 		vscore,        // the currently displayed score (it catches up to score in small chunks - like a spinning slot machine)
 		rows,          // number of completed rows in the current game
 		step,          // how long before current piece drops by 1 row
-		pause;         // true|false - game is paused  
+		pause,         // true|false - game is paused
+		
+		//other boards
+		eastBlocks, northBlocks, westBlocks,
+		currentBlocks = blocks;  
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -216,9 +220,9 @@ function clearScore()           { setScore(0); }
 function clearRows()            { setRows(0); }
 function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); invalidateRows(); }
 function addRows(n)             { setRows(rows + n); }
-function getBlock(x,y)          { return (blocks && blocks[x] ? blocks[x][y] : null); }
-function setBlock(x,y,type)     { blocks[x] = blocks[x] || []; blocks[x][y] = type; invalidate(); }
-function clearBlocks()          { blocks = []; invalidate(); }
+function getBlock(x,y)          { return (currentBlocks && currentBlocks[x] ? currentBlocks[x][y] : null); }
+function setBlock(x,y,type)     { currentBlocks[x] = currentBlocks[x] || []; currentBlocks[x][y] = type; invalidate(); }
+function clearBlocks()          { currentBlocks = []; invalidate(); }
 function clearActions()         { actions = []; }
 function setCurrentPiece(piece) { current = piece || randomPiece(); invalidate();     }
 function setNextPiece(piece)    { next    = piece || randomPiece(); invalidateNext(); }
@@ -304,22 +308,26 @@ function dropPiece() {
 		setBlock(x, y, current.type);
 	});
 	
-	//set next direction
+	//set next direction, based on current directions
 	switch (currentDirection){
 		case 'south':
 			ctx = eastCtx;
+			currentBlocks = eastBlocks;
 			currentDirection = 'east';
 			break;
 		case 'east':
 			ctx = northCtx;
+			currentBlocks = northBlocks;
 			currentDirection = 'north';
 			break;
 		case 'north':
 			ctx = westCtx;
+			currentBlocks = westBlocks;
 			currentDirection = 'west';
 			break;
 		case 'west':
 			ctx = canvas.getContext('2d');
+			currentBlocks = blocks;
 			currentDirection = 'south';
 			break;
 	}

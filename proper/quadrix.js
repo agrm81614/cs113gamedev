@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80},
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp: 49, Plus: 187, Minus: 189},
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -58,7 +58,10 @@ var dx, dy,        // pixel size of a single tetris block
 		vscore,        // the currently displayed score (it catches up to score in small chunks - like a spinning slot machine)
 		rows,          // number of completed rows in the current game
 		step,          // how long before current piece drops by 1 row
-		pause;		   // true|false - game is paused
+		pause,		   // true|false - game is paused
+		prows,         // row progress toward powerup
+		powerup,       // true|false - indicates whether powerup is available
+		rowsforpowerup = 2;	// rows needed for powerup
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -186,6 +189,10 @@ function keydown(ev) {
 				case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
 				case KEY.ESC:    lose();                  handled = true; break;
 				case KEY.P:      pause = !pause;          handled = true; show('pause'); break;
+				case KEY.PUp:    activatePowerup();       handled = true; break;
+				// case KEY.Plus:      changeSpeed('increment');         handled = true; break;
+				// case KEY.Minus:      changeSpeed('decrement');         handled = true; break;
+				//case KEY.B:      removeLine(2);           handled = true; break;  				//How does removeLine(n) work?
 			}
 		}
 		else if (ev.keyCode == KEY.SPACE) {
@@ -221,6 +228,12 @@ function clearBlocks()          { blocks = []; invalidate(); }
 function clearActions()         { actions = []; }
 function setCurrentPiece(piece) { current = piece || randomPiece(); invalidate();     }
 function setNextPiece(piece)    { next    = piece || randomPiece(); invalidateNext(); }
+function addPRow(n) {
+	for (n; prows < 6; --n) {
+		++prows;
+	}
+	checkPowerup();
+}
 
 function reset() {
 	dt = 0;
@@ -231,6 +244,8 @@ function reset() {
 	setCurrentPiece(next);
 	setNextPiece();
 	pause = false;
+	powerup = false;
+	prows = 0;
 }
 
 function update(idt) {
@@ -320,6 +335,7 @@ function removeLines() {
 	if (n > 0) {
 		addRows(n);
 		addScore(100*Math.pow(2,n-1)); // 1: 100, 2: 200, 3: 400, 4: 800
+		addPRow(n);
 	}
 }
 
@@ -409,6 +425,40 @@ function drawBlock(ctx, x, y, color) {
 	ctx.fillRect(x*dx, y*dy, dx, dy);
 	ctx.strokeRect(x*dx, y*dy, dx, dy)
 }
+
+function checkPowerup() {
+	if (prows == rowsforpowerup) {
+		powerup = true;
+		prows = 0; //reset after gaining powerup
+		togglePowerupAvailable();
+	}
+}
+
+function activatePowerup() {
+	if (powerup) {
+		//Do a power up here...
+		powerup = false;
+		togglePowerupAvailable();
+	}
+}
+
+function togglePowerupAvailable() {
+	if (powerup) {
+		document.getElementById("powerup").innerHTML = "Available!";
+	}
+	else {
+		document.getElementById("powerup").innerHTML = "None";
+	}
+}
+
+// function changeSpeed(action) {
+	// if (action == 'increment') {
+		// speed.start += .1;
+	// }
+	// else if (action == 'decrement') {
+		// speed.start -= .1;
+	// }
+// }
 
 //-------------------------------------------------------------------------
 // FINALLY, lets run the game

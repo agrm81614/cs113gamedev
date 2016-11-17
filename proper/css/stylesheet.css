@@ -16,7 +16,7 @@ body {
 #eastCanvas {
     display: inline-block;
     /*background: url(texture.jpg);*/
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
 }
 
 #northCanvas {
@@ -28,7 +28,7 @@ body {
 #westCanvas {
     display: inline-block;
     /*background: url(texture.jpg);*/
-    transform: rotate(270deg);
+    transform: rotate(90deg);
 }
 
 #menu {

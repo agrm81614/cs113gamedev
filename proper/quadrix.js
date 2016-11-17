@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp: 49, Plus: 187, Minus: 189},
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp: 49, Plus: 187, Minus: 189}, //PUp is '1' key
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -59,14 +59,11 @@ var dx, dy,        // pixel size of a single tetris block
 		vscore,        // the currently displayed score (it catches up to score in small chunks - like a spinning slot machine)
 		rows,          // number of completed rows in the current game
 		step,          // how long before current piece drops by 1 row
-<<<<<<< HEAD
 		pause,		   // true|false - game is paused
 		prows,         // row progress toward powerup
 		powerup,       // true|false - indicates whether powerup is available
-		rowsforpowerup = 2;	// rows needed for powerup
-=======
+		rowsforpowerup = 2;	// rows needed for powerups
 		pause;         // true|false - game is paused  
->>>>>>> 1a93befd1df3f44a688af9c5939be124ed50f87d
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -233,12 +230,6 @@ function clearBlocks()          { blocks = []; invalidate(); }
 function clearActions()         { actions = []; }
 function setCurrentPiece(piece) { current = piece || randomPiece(); invalidate();     }
 function setNextPiece(piece)    { next    = piece || randomPiece(); invalidateNext(); }
-function addPRow(n) {
-	for (n; prows < 6; --n) {
-		++prows;
-	}
-	checkPowerup();
-}
 
 function reset() {
 	dt = 0;
@@ -345,6 +336,11 @@ function dropPiece() {
 	//ctx = eastCtx;
 }
 
+function addPRow() {
+	++prows;
+	checkPowerup();
+}
+
 function removeLines() {
 	var x, y, complete, n = 0;
 	for(y = ny ; y > 0 ; --y) {
@@ -362,13 +358,13 @@ function removeLines() {
 	if (n > 0) {
 		addRows(n);
 		addScore(100*Math.pow(2,n-1)); // 1: 100, 2: 200, 3: 400, 4: 800
-		addPRow(n);
 	}
 }
 
 function removeLine(n) {
 	var x, y;
 	for(y = n ; y >= 0 ; --y) {
+		addPRow();
 		for(x = 0 ; x < nx ; ++x)
 			setBlock(x, y, (y == 0) ? null : getBlock(x, y-1));
 	}

@@ -62,8 +62,9 @@ var dx, dy,        // pixel size of a single tetris block
 		pause,		   // true|false - game is paused
 		prows,         // row progress toward powerup
 		powerup,       // true|false - indicates whether powerup is available
-		rowsforpowerup = 2;	// rows needed for powerups
-		pause;         // true|false - game is paused
+		rowsforpowerup = 1,	// rows needed for powerups
+		pause,         // true|false - game is paused
+		multiplier = 1;		// determines what multiply score by
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -129,6 +130,7 @@ var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
 		pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+		// pieces = [o,o,o,o];
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
 }
@@ -219,7 +221,7 @@ function lose() { show('start'); setVisualScore(); playing = false; }
 
 function setVisualScore(n)      { vscore = n || score; invalidateScore(); }
 function setScore(n)            { score = n; setVisualScore(n);  }
-function addScore(n)            { score = score + n;   }
+function addScore(n)            { score = score + (n * multiplier);   }
 function clearScore()           { setScore(0); }
 function clearRows()            { setRows(0); }
 function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); invalidateRows(); }
@@ -461,6 +463,8 @@ function checkPowerup() {
 function activatePowerup() {
 	if (powerup) {
 		//Do a power up here...
+		// multiplier = 10;
+		// set interval then change multiplier back to 1
 		powerup = false;
 		console.log("You did it!!! 🎉");
 		togglePowerupAvailable();

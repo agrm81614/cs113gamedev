@@ -63,7 +63,7 @@ var dx, dy,        // pixel size of a single tetris block
 		prows,         // row progress toward powerup
 		powerup,       // true|false - indicates whether powerup is available
 		rowsforpowerup = 2;	// rows needed for powerups
-		pause;         // true|false - game is paused  
+		pause;         // true|false - game is paused
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -313,7 +313,7 @@ function dropPiece() {
 	eachblock(current.type, current.x, current.y, current.dir, function(x, y) {
 		setBlock(x, y, current.type);
 	});
-	
+
 	//set next direction
 	switch (currentDirection){
 		case 'south':
@@ -337,7 +337,8 @@ function dropPiece() {
 }
 
 function addPRow() {
-	++prows;
+	prows += 1;
+	console.log("Prows is at " + prows);
 	checkPowerup();
 }
 
@@ -364,10 +365,10 @@ function removeLines() {
 function removeLine(n) {
 	var x, y;
 	for(y = n ; y >= 0 ; --y) {
-		addPRow();
 		for(x = 0 ; x < nx ; ++x)
 			setBlock(x, y, (y == 0) ? null : getBlock(x, y-1));
 	}
+	addPRow();
 }
 
 //-------------------------------------------------------------------------
@@ -461,6 +462,7 @@ function activatePowerup() {
 	if (powerup) {
 		//Do a power up here...
 		powerup = false;
+		console.log("You did it!!! 🎉");
 		togglePowerupAvailable();
 	}
 }

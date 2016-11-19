@@ -16,17 +16,23 @@
 		<div class="divTableBody">
 
 			<div class="divTableRow">
-				<div class="divTableCell bg-black"></div>
+				<div class="tc v-mid divTableCell bg-black white">
+          Power-Ups!
+          <p class="tl">
+            Status: <span class="fr blue b" id="powerup">Offline</span>
+            <br>
+            Available: <span class="fr blue b" id="currentPowerup">None</span>
+          </p>
+        </div>
 				<div class="tc v-mid divTableCell bg-gray">
 					<canvas class="bg-white" id="northCanvas" width="200" height="200">Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element</canvas>
 				</div>
-				<div class="v-mid divTableCell bg-black">
-					<p class="white">
+				<div class="white tc v-mid divTableCell bg-black">
+          Stats!
+          <p class="tl">
 						Score: <span class="fr red b" id="score">00000</span>
 						<br>
-						Rows: <span class="fr blue b" id="rows">0</span>
-						<br>
-						Power-Up: <span class="fr green b" id="powerup">None</span>
+						Rows: <span class="fr green b" id="rows">0</span>
 						<br>
 						Direction: <span class="fr purple b" id="direction">South</span>
 					</p>

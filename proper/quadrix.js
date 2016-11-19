@@ -129,8 +129,8 @@ function unoccupied(type, x, y, dir) {
 var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
-		pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
-		// pieces = [o,o,o,o];
+	pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+	// pieces = [o,o,o,o];
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
 }
@@ -474,9 +474,11 @@ function activatePowerup() {
 function togglePowerupAvailable() {
 	if (powerup) {
 		document.getElementById("powerup").innerHTML = "Available!";
+		document.getElementById("currentPowerup").innerHTML = "Score x2!";
 	}
 	else {
-		document.getElementById("powerup").innerHTML = "None";
+		document.getElementById("powerup").innerHTML = "Offline";
+		document.getElementById("currentPowerup").innerHTML = "None";
 	}
 }
 

@@ -194,7 +194,7 @@ function keydown(ev) {
 				case KEY.PUp:    activatePowerup();       handled = true; break;
 				// case KEY.Plus:      changeSpeed('increment');         handled = true; break;
 				// case KEY.Minus:      changeSpeed('decrement');         handled = true; break;
-				//case KEY.B:      removeLine(2);           handled = true; break;  				//How does removeLine(n) work?
+				//case KEY.B:      removeLine(2);           handled = true; break;  				//Still have no idea how removeline works
 			}
 		}
 		else if (ev.keyCode == KEY.SPACE) {

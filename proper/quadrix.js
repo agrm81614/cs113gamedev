@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp: 49, Plus: 187, Minus: 189}, //PUp is '1' key
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, Plus: 187, Minus: 189}, //PUp1 is '1' key
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -129,8 +129,8 @@ function unoccupied(type, x, y, dir) {
 var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
-	pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
-	// pieces = [o,o,o,o];
+	//pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+	pieces = [o,o,o,o];
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
 }
@@ -193,7 +193,7 @@ function keydown(ev) {
 				case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
 				case KEY.ESC:    lose();                  handled = true; break;
 				case KEY.P:      pause = !pause;          handled = true; show('pause'); break;
-				case KEY.PUp:    activatePowerup();       handled = true; break;
+				case KEY.PUp1:    activatePowerup();       handled = true; break;
 				// case KEY.Plus:      changeSpeed('increment');         handled = true; break;
 				// case KEY.Minus:      changeSpeed('decrement');         handled = true; break;
 				//case KEY.B:      removeLine(2);           handled = true; break;  				//Still have no idea how removeline works
@@ -460,14 +460,22 @@ function checkPowerup() {
 	}
 }
 
+function resetMultiplier() {
+	multiplier = 1;
+	console.log("Multiplier = ", multiplier)
+}
+
 function activatePowerup() {
 	if (powerup) {
 		//Do a power up here...
-		// multiplier = 10;
-		// set interval then change multiplier back to 1
+		multiplier = 2;
+		console.log("multiplier = ", multiplier);
+		delay = 15000; //15 seconds
+		// set timeout (delay) then change multiplier back to 1
+		setTimeout(resetMultiplier, delay);
 		powerup = false;
+		setTimeout(togglePowerupAvailable, delay);
 		console.log("You did it!!! 🎉");
-		togglePowerupAvailable();
 	}
 }
 

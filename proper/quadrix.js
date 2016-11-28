@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, Plus: 187, Minus: 189}, //PUp1 is '1' key
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, PUp2: 50, Plus: 187, Minus: 189}, //PUp1 is '1' key
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -61,9 +61,9 @@ var dx, dy,        // pixel size of a single tetris block
 		step,          // how long before current piece drops by 1 row
 		pause,		   // true|false - game is paused
 		prows,         // row progress toward powerup
-		powerup,       // true|false - indicates whether powerup is available
+		powerupOne,       // true|false - indicates whether powerup one is available
+		powerupTwo,       // true|false - indicates whether powerup two is available
 		rowsforpowerup = 1,	// rows needed for powerups
-		pause,         // true|false - game is paused
 		multiplier = 1;		// determines what multiply score by
 //-------------------------------------------------------------------------
 // tetris pieces
@@ -193,7 +193,8 @@ function keydown(ev) {
 				case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
 				case KEY.ESC:    lose();                  handled = true; break;
 				case KEY.P:      pause = !pause;          handled = true; show('pause'); break;
-				case KEY.PUp1:    activatePowerup();       handled = true; break;
+				case KEY.PUp1:    if (powerupOne) {activatePowerupOne();}       handled = true; break;
+				case KEY.PUp2:    if (powerupTwo) {activatePowerupTwo();}       handled = true; break;
 				// case KEY.Plus:      changeSpeed('increment');         handled = true; break;
 				// case KEY.Minus:      changeSpeed('decrement');         handled = true; break;
 				//case KEY.B:      removeLine(2);           handled = true; break;  				//Still have no idea how removeline works
@@ -242,7 +243,8 @@ function reset() {
 	setCurrentPiece(next);
 	setNextPiece();
 	pause = false;
-	powerup = false;
+	powerupOne = false;
+	powerupTwo = false;
 	prows = 0;
 }
 
@@ -454,39 +456,53 @@ function drawBlock(ctx, x, y, color) {
 
 function checkPowerup() {
 	if (prows == rowsforpowerup) {
-		powerup = true;
+		powerupOne = true;
+		powerupTwo = true;
 		prows = 0; //reset after gaining powerup
-		togglePowerupAvailable();
+		togglePowerupAvailable("powerupX2");
+		togglePowerupAvailable("powerupSlow");
 	}
 }
 
 function resetMultiplier() {
 	multiplier = 1;
-	console.log("Multiplier = ", multiplier)
 }
 
-function activatePowerup() {
-	if (powerup) {
-		//Do a power up here...
-		multiplier = 2;
-		console.log("multiplier = ", multiplier);
-		delay = 15000; //15 seconds
-		// set timeout (delay) then change multiplier back to 1
-		setTimeout(resetMultiplier, delay);
-		powerup = false;
-		setTimeout(togglePowerupAvailable, delay);
-		console.log("You did it!!! 🎉");
-	}
+function activatePowerupOne() {
+	multiplier = 2;
+	delay = 15000; //15 seconds
+	// set timeout (delay) then change multiplier back to 1
+	setTimeout(resetMultiplier, delay);
+	powerupOne = false;
+	powerupTwo = false;
+	togglePowerupAvailable("powerupSlow");
+	setTimeout(togglePowerupAvailable("powerupX2"), delay);
 }
 
-function togglePowerupAvailable() {
-	if (powerup) {
-		document.getElementById("powerup").innerHTML = "Available!";
-		document.getElementById("currentPowerup").innerHTML = "Score x2!";
+function activatePowerupTwo() {
+	powerupOne = false;
+	powerupTwo = false;
+	delay = 15000;
+	togglePowerupAvailable("powerupX2")
+	setTimeout(togglePowerupAvailable("powerupSlow"), delay);
+}
+
+function togglePowerupAvailable(powerupx) {
+	var powerupAvailability;
+	if (powerupx == "powerupX2") {
+		powerupAvailability = powerupOne;
 	}
+	else if (powerupx == "powerupSlow") {
+		powerupAvailability = powerupTwo;
+	}
+	
+	if (powerupAvailability) {
+		document.getElementById(powerupx).innerHTML = "Available";
+		document.getElementById(powerupx).style.color = "blue";
+		}
 	else {
-		document.getElementById("powerup").innerHTML = "Offline";
-		document.getElementById("currentPowerup").innerHTML = "None";
+		document.getElementById(powerupx).innerHTML = "Offline";
+		document.getElementById(powerupx).style.color = "red";
 	}
 }
 

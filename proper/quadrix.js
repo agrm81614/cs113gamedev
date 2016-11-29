@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, PUp2: 50, Plus: 187, Minus: 189}, //PUp1 is '1' key
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, PUp2: 50, Plus: 187, Minus: 189}, //PUp1 is '1' key; PUp2 is '2' key
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -64,7 +64,8 @@ var dx, dy,        // pixel size of a single tetris block
 		powerupOne,       // true|false - indicates whether powerup one is available
 		powerupTwo,       // true|false - indicates whether powerup two is available
 		rowsforpowerup = 1,	// rows needed for powerups
-		multiplier = 1;		// determines what multiply score by
+		multiplier = 1,		// determines what multiply score by
+		slow = 1;		//determines how much to slow piece drop by (step * slow)
 //-------------------------------------------------------------------------
 // tetris pieces
 //
@@ -225,7 +226,7 @@ function setScore(n)            { score = n; setVisualScore(n);  }
 function addScore(n)            { score = score + (n * multiplier);   }
 function clearScore()           { setScore(0); }
 function clearRows()            { setRows(0); }
-function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); invalidateRows(); }
+function setRows(n)             { rows = n; step = Math.max(speed.min, speed.start - (speed.decrement*rows)); step = (step * slow); console.log(step); invalidateRows(); }
 function addRows(n)             { setRows(rows + n); }
 function getBlock(x,y)          { return (blocks && blocks[x] ? blocks[x][y] : null); }
 function setBlock(x,y,type)     { blocks[x] = blocks[x] || []; blocks[x][y] = type; invalidate(); }
@@ -476,15 +477,23 @@ function activatePowerupOne() {
 	powerupOne = false;
 	powerupTwo = false;
 	togglePowerupAvailable("powerupSlow");
-	setTimeout(togglePowerupAvailable("powerupX2"), delay);
+	togglePowerupAvailable("powerupX2");
+}
+
+function resetSlow() {
+	slow = 1;
+	addRows(0);
 }
 
 function activatePowerupTwo() {
+	slow = 2;
+	addRows(0);
 	powerupOne = false;
 	powerupTwo = false;
 	delay = 15000;
+	setTimeout(resetSlow, delay)
 	togglePowerupAvailable("powerupX2")
-	setTimeout(togglePowerupAvailable("powerupSlow"), delay);
+	togglePowerupAvailable("powerupSlow");
 }
 
 function togglePowerupAvailable(powerupx) {

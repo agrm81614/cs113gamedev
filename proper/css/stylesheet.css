@@ -1,5 +1,14 @@
+html{
+  background-color: #19a974;
+}
+
 body {
-    background: #464453;
+    height: 100vh;
+    background: #dddddd;
+}
+
+h1{
+  font-family: 'Bungee', cursive;
 }
 
 /*#stats {
@@ -47,6 +56,8 @@ body {
 .divTable {
     display: table;
     margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
 }
 
 .divTableRow {
@@ -59,9 +70,9 @@ body {
 }
 
 .divTableCell, .divTableHead {
-    border: 1px solid #999999;
+    /*border: 1px solid #999999;*/
     display: table-cell;
-    padding: 3px 10px;
+    padding: 0 10px;
 }
 
 .divTableHeading {

@@ -504,10 +504,10 @@ function togglePowerupAvailable(powerupx) {
 	else if (powerupx == "powerupSlow") {
 		powerupAvailability = powerupTwo;
 	}
-	
+
 	if (powerupAvailability) {
 		document.getElementById(powerupx).innerHTML = "Available";
-		document.getElementById(powerupx).style.color = "blue";
+		document.getElementById(powerupx).style.color = "lightblue";
 		}
 	else {
 		document.getElementById(powerupx).innerHTML = "Offline";

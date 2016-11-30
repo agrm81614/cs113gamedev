@@ -328,6 +328,8 @@ function move(dir) {
 		current.x = x;
 		current.y = y;
 		invalidate();
+		var softTick = new Audio("/soft-tick.wav"); // buffers automatically when created
+		softTick.play();
 		return true;
 	}
 	else {
@@ -362,6 +364,8 @@ function dropPiece() {
 	eachblock(current.type, current.x, current.y, current.dir, function(x, y) {
 		setBlock(x, y, current.type);
 	});
+	var piecePlaced = new Audio("/piece-in-place.wav"); // buffers automatically when created
+	piecePlaced.play();
 
 	//set next direction
 	switch (currentDirection){
@@ -418,6 +422,8 @@ function removeLine(n) {
 			setBlock(x, y, (y == 0) ? null : getBlock(x, y-1));
 	}
 	addPRow();
+	var clearedSound = new Audio("/line-cleared.wav"); // buffers automatically when created
+	clearedSound.play();
 }
 
 //-------------------------------------------------------------------------

@@ -410,6 +410,7 @@ function drawCourt() {
 					drawBlock(ctx, x, y, block.color);
 			}
 		}
+		ctx.strokeStyle="#aaaaaa";
 		ctx.strokeRect(0, 0, nx*dx - 1, ny*dy - 1); // court boundary
 		invalid.court = false;
 	}

@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, PUp2: 50, Plus: 187, Minus: 189}, //PUp1 is '1' key; PUp2 is '2' key
+var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, PUp2: 50, PUp3: 51}, //PUp1 is '1' key; PUp2 is '2' key; PUp3 is '3'
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -61,9 +61,11 @@ var dx, dy,        // pixel size of a single tetris block
 		step,          // how long before current piece drops by 1 row
 		pause,		   // true|false - game is paused
 		prows,         // row progress toward powerup
+		ptracker = 0,	   // keeps track of which power up to toggle
 		powerupOne,       // true|false - indicates whether powerup one is available
 		powerupTwo,       // true|false - indicates whether powerup two is available
-		rowsforpowerup = 1,	// rows needed for powerups
+		powerupThree,       // true|false - indicates whether powerup three is available
+		rowsforpowerup = 2,	// rows needed for powerups
 		multiplier = 1,		// determines what multiply score by
 		slow = 1;		//determines how much to slow piece drop by (step * slow)
 //-------------------------------------------------------------------------
@@ -131,6 +133,7 @@ var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
 	//pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+	//pieces = [o,o,o,o,l,l,l,l];
 	pieces = [o,o,o,o];
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
@@ -194,11 +197,9 @@ function keydown(ev) {
 				case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
 				case KEY.ESC:    lose();                  handled = true; break;
 				case KEY.P:      pause = !pause;          handled = true; show('pause'); break;
-				case KEY.PUp1:    if (powerupOne) {activatePowerupOne();}       handled = true; break;
-				case KEY.PUp2:    if (powerupTwo) {activatePowerupTwo();}       handled = true; break;
-				// case KEY.Plus:      changeSpeed('increment');         handled = true; break;
-				// case KEY.Minus:      changeSpeed('decrement');         handled = true; break;
-				//case KEY.B:      removeLine(2);           handled = true; break;  				//Still have no idea how removeline works
+				case KEY.PUp1:   if (powerupOne)	{activatePowerupOne();}     handled = true; break;
+				case KEY.PUp2:   if (powerupTwo) 	{activatePowerupTwo();}     handled = true; break;
+				case KEY.PUp3:   if (powerupThree) 	{activatePowerupThree();}	handled = true; break;
 			}
 		}
 		else if (ev.keyCode == KEY.SPACE) {
@@ -458,11 +459,28 @@ function drawBlock(ctx, x, y, color) {
 
 function checkPowerup() {
 	if (prows == rowsforpowerup) {
-		powerupOne = true;
-		powerupTwo = true;
-		prows = 0; //reset after gaining powerup
-		togglePowerupAvailable("powerupX2");
-		togglePowerupAvailable("powerupSlow");
+		ptracker += 1;
+		console.log(ptracker);
+		switch (ptracker) {
+			case 1:
+				if (!powerupOne) {
+					powerupOne = true;
+					togglePowerupAvailable("powerupX2");
+				} break;
+			case 2:
+				if (!powerupTwo) {
+					powerupTwo = true;
+					togglePowerupAvailable("powerupSlow");
+				} break;
+			case 3:
+				if (!powerupThree) {
+					powerupThree = true;
+					togglePowerupAvailable("powerupMercy");
+				}
+				ptracker = 0; //reset tracker after getting 3rd power-up
+				break;
+		}
+		prows = 0; //reset prows after attaining each power-up
 	}
 }
 
@@ -476,8 +494,6 @@ function activatePowerupOne() {
 	// set timeout (delay) then change multiplier back to 1
 	setTimeout(resetMultiplier, delay);
 	powerupOne = false;
-	powerupTwo = false;
-	togglePowerupAvailable("powerupSlow");
 	togglePowerupAvailable("powerupX2");
 }
 
@@ -489,12 +505,23 @@ function resetSlow() {
 function activatePowerupTwo() {
 	slow = 2;
 	addRows(0);
-	powerupOne = false;
 	powerupTwo = false;
 	delay = 15000;
 	setTimeout(resetSlow, delay)
-	togglePowerupAvailable("powerupX2")
 	togglePowerupAvailable("powerupSlow");
+}
+
+function resetPieces() {
+	//pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+	pieces = [o,o,o,o];
+}
+
+function activatePowerupThree() {
+	pieces = [o,o,o,o,i,i,i,i];
+	powerupThree = false;
+	delay = 15000;
+	setTimeout(resetPieces, delay);
+	togglePowerupAvailable("powerupMercy");
 }
 
 function togglePowerupAvailable(powerupx) {
@@ -504,6 +531,9 @@ function togglePowerupAvailable(powerupx) {
 	}
 	else if (powerupx == "powerupSlow") {
 		powerupAvailability = powerupTwo;
+	}
+	else if (powerupx == "powerupMercy") {
+		powerupAvailability = powerupThree;
 	}
 
 	if (powerupAvailability) {
@@ -516,14 +546,6 @@ function togglePowerupAvailable(powerupx) {
 	}
 }
 
-// function changeSpeed(action) {
-	// if (action == 'increment') {
-		// speed.start += .1;
-	// }
-	// else if (action == 'decrement') {
-		// speed.start -= .1;
-	// }
-// }
 
 //-------------------------------------------------------------------------
 // FINALLY, lets run the game

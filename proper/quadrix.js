@@ -246,7 +246,7 @@ function keydown(ev) {
 			handled = true;
 		}
 	}
-	else if (ev.keyCode == KEY.P) {
+	else if (ev.keyCode == KEY.ESC) {
 		pause = !pause;
 		hide('pause');
 	}

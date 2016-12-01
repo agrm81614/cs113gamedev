@@ -289,9 +289,9 @@ function reset() {
 	powerupTwo = false;
 	powerupThree = false;
 	prows = 0;
-	multiplier = 1;
+	resetMultiplier;
 	ptracker = 0;
-	slow = 1;
+	resetSlow;
 	powerupOffline("powerupX2");
 	powerupOffline("powerupSlow");
 	powerupOffline("powerupMercy");

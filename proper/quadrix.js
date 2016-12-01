@@ -25,7 +25,8 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 // game constants
 //-------------------------------------------------------------------------
 
-var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, B: 66, PUp1: 49, PUp2: 50, PUp3: 51, R: 82}, //PUp1 is '1' key; PUp2 is '2' key; PUp3 is '3'; R is rotate
+//var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, PUp1: 49, PUp2: 50, PUp3: 51, R: 82, ENTER: 13}, //PUp1 is '1' key; PUp2 is '2' key; PUp3 is '3'; R is rotate
+var KEY     = { ESC: 27, SPACE: 32, W: 87, A: 65, S: 83, D: 68, P: 80, PUp1: 49, PUp2: 50, PUp3: 51, ENTER: 13}, //W A S D movement key code set
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),
 		canvas  = get('southCanvas'),
@@ -193,10 +194,10 @@ function keydown(ev) {
 			switch(currentDirection) {
 				case 'south':
 					switch(ev.keyCode) {
-						case KEY.LEFT:   actions.push(DIR.LEFT);  handled = true; break;
-						case KEY.RIGHT:  actions.push(DIR.RIGHT); handled = true; break;
-						case KEY.R:     actions.push(DIR.UP);    handled = true; break;
-						case KEY.DOWN:   actions.push(DIR.DOWN);  handled = true; break;
+						case KEY.A:   actions.push(DIR.LEFT);  handled = true; break;
+						case KEY.D:  actions.push(DIR.RIGHT); handled = true; break;
+						case KEY.SPACE:     actions.push(DIR.UP);    handled = true; break;
+						case KEY.S:   actions.push(DIR.DOWN);  handled = true; break;
 						case KEY.P:    lose();                  handled = true; break;
 						case KEY.ESC:      pause = !pause;          handled = true; show('pause'); break;
 						case KEY.PUp1:   if (powerupOne)	{activatePowerupOne();}     handled = true; break;
@@ -205,10 +206,10 @@ function keydown(ev) {
 					} break;
 					case 'east':
 					switch(ev.keyCode) {
-						case KEY.DOWN:   actions.push(DIR.LEFT);  handled = true; break;
-						case KEY.UP:  actions.push(DIR.RIGHT); handled = true; break;
-						case KEY.R:     actions.push(DIR.UP);    handled = true; break;
-						case KEY.RIGHT:   actions.push(DIR.DOWN);  handled = true; break;
+						case KEY.S:   actions.push(DIR.LEFT);  handled = true; break;
+						case KEY.W:  actions.push(DIR.RIGHT); handled = true; break;
+						case KEY.SPACE:     actions.push(DIR.UP);    handled = true; break;
+						case KEY.D:   actions.push(DIR.DOWN);  handled = true; break;
 						case KEY.P:    lose();                  handled = true; break;
 						case KEY.ESC:      pause = !pause;          handled = true; show('pause'); break;
 						case KEY.PUp1:   if (powerupOne)	{activatePowerupOne();}     handled = true; break;
@@ -217,22 +218,22 @@ function keydown(ev) {
 					} break;
 					case 'north':
 					switch(ev.keyCode) {
-						case KEY.RIGHT:   actions.push(DIR.LEFT);  handled = true; break;
-						case KEY.LEFT:  actions.push(DIR.RIGHT); handled = true; break;
-						case KEY.R:     actions.push(DIR.UP);    handled = true; break;
-						case KEY.UP:   actions.push(DIR.DOWN);  handled = true; break;
+						case KEY.D:   actions.push(DIR.LEFT);  handled = true; break;
+						case KEY.A:  actions.push(DIR.RIGHT); handled = true; break;
+						case KEY.SPACE:     actions.push(DIR.UP);    handled = true; break;
+						case KEY.W:   actions.push(DIR.DOWN);  handled = true; break;
 						case KEY.P:    lose();                  handled = true; break;
 						case KEY.ESC:      pause = !pause;          handled = true; show('pause'); break;
 						case KEY.PUp1:   if (powerupOne)	{activatePowerupOne();}     handled = true; break;
 						case KEY.PUp2:   if (powerupTwo) 	{activatePowerupTwo();}     handled = true; break;
-						case KEY.PUp3:   if (powerupThree) 	{activatePowerupThree();}	handled = true; break;
+						case KEY.PUp3:   if (powerupThree) 	{activatePowerupThree();}	handled = true; break; 
 					} break;
 					case 'west':
 					switch(ev.keyCode) {
-						case KEY.UP:   actions.push(DIR.LEFT);  handled = true; break;
-						case KEY.DOWN:  actions.push(DIR.RIGHT); handled = true; break;
-						case KEY.R:     actions.push(DIR.UP);    handled = true; break;
-						case KEY.LEFT:   actions.push(DIR.DOWN);  handled = true; break;
+						case KEY.W:   actions.push(DIR.LEFT);  handled = true; break;
+						case KEY.S:  actions.push(DIR.RIGHT); handled = true; break;
+						case KEY.SPACE:     actions.push(DIR.UP);    handled = true; break;
+						case KEY.A:   actions.push(DIR.DOWN);  handled = true; break;
 						case KEY.P:    lose();                  handled = true; break;
 						case KEY.ESC:      pause = !pause;          handled = true; show('pause'); break;
 						case KEY.PUp1:   if (powerupOne)	{activatePowerupOne();}     handled = true; break;
@@ -241,7 +242,7 @@ function keydown(ev) {
 					} break;
 			}
 		}
-		else if (ev.keyCode == KEY.SPACE) {
+		else if (ev.keyCode == KEY.ENTER) {
 			play();
 			handled = true;
 		}
@@ -291,6 +292,9 @@ function reset() {
 	multiplier = 1;
 	ptracker = 0;
 	slow = 1;
+	powerupOffline("powerupX2");
+	powerupOffline("powerupSlow");
+	powerupOffline("powerupMercy");
 }
 
 function update(idt) {
@@ -567,6 +571,16 @@ function activatePowerupThree() {
 	togglePowerupAvailable("powerupMercy");
 }
 
+function powerupOffline(powerupx) {
+		document.getElementById(powerupx).innerHTML = "Offline";
+		document.getElementById(powerupx).style.color = "red";
+}
+
+function powerupOnline(powerupx) {
+		document.getElementById(powerupx).innerHTML = "Available";
+		document.getElementById(powerupx).style.color = "lightblue";
+}
+
 function togglePowerupAvailable(powerupx) {
 	var powerupAvailability;
 	if (powerupx == "powerupX2") {
@@ -580,12 +594,10 @@ function togglePowerupAvailable(powerupx) {
 	}
 
 	if (powerupAvailability) {
-		document.getElementById(powerupx).innerHTML = "Available";
-		document.getElementById(powerupx).style.color = "lightblue";
+		powerupOnline(powerupx);
 		}
 	else {
-		document.getElementById(powerupx).innerHTML = "Offline";
-		document.getElementById(powerupx).style.color = "red";
+		powerupOffline(powerupx);
 	}
 }
 

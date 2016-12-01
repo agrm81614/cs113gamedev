@@ -133,9 +133,9 @@ function unoccupied(type, x, y, dir) {
 var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
-	//pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+	pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
 	//pieces = [o,o,o,o,l,l,l,l];
-	pieces = [o,o,o,o];
+	//pieces = [o,o,o,o];
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
 }
@@ -332,6 +332,8 @@ function move(dir) {
 		current.x = x;
 		current.y = y;
 		invalidate();
+		var softTick = new Audio("/soft-tick.wav"); // buffers automatically when created
+		softTick.play();
 		return true;
 	}
 	else {
@@ -366,6 +368,8 @@ function dropPiece() {
 	eachblock(current.type, current.x, current.y, current.dir, function(x, y) {
 		setBlock(x, y, current.type);
 	});
+	var piecePlaced = new Audio("/piece-in-place.wav"); // buffers automatically when created
+	piecePlaced.play();
 
 	//set next direction
 	switch (currentDirection){
@@ -422,6 +426,8 @@ function removeLine(n) {
 			setBlock(x, y, (y == 0) ? null : getBlock(x, y-1));
 	}
 	addPRow();
+	var clearedSound = new Audio("/line-cleared.wav"); // buffers automatically when created
+	clearedSound.play();
 }
 
 //-------------------------------------------------------------------------

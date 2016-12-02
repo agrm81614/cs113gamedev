@@ -40,10 +40,16 @@ h1{
     transform: rotate(90deg);
 }
 
+#upcoming{
+  width: 150px !important;
+}
+
 #menu {
-    display: inline-block;
+    /*display: inline-block;*/
     vertical-align: top;
     position: relative;
+    width: 200px;
+    margin-bottom: -100px;
 }
 
 #stats {
@@ -72,7 +78,7 @@ h1{
 .divTableCell, .divTableHead {
     /*border: 1px solid #999999;*/
     display: table-cell;
-    padding: 0 10px;
+    padding: 0 0;
 }
 
 .divTableHeading {

@@ -20,6 +20,11 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 																	 window.setTimeout(callback, 1000 / 60);
 																 }
 }
+//-----TEST MODE TOGGLE
+//Set testMode to true to spawn only squares
+//Set to false for all regular pieces (normal game play)
+//-----
+var testMode = false;
 
 //-------------------------------------------------------------------------
 // game constants
@@ -134,9 +139,14 @@ function unoccupied(type, x, y, dir) {
 var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
-	//pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
-	//pieces = [o,o,o,o,l,l,l,l];
-	pieces = [o,o,o,o];
+		if (testMode) {
+			//pieces = [o,o,o,o,l,l,l,l];
+			pieces = [o,o,o,o];
+			console.log("Test Mode is on");
+		}
+		else {
+			pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+		}
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
 }

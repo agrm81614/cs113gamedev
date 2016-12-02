@@ -42,7 +42,7 @@ westCtx     = westCanvas.getContext('2d'),
 		speed   = { start: 0.6, decrement: 0.005, min: 0.1 }, // how long before piece drops by 1 row (seconds)
 		nx      = 10, // width of tetris court (in blocks)
 		ny      = 10, // height of tetris court (in blocks)
-		nu      = 5,  // width/height of upcoming preview (in blocks)
+		nu      = 7.75,  // width/height of upcoming preview (in blocks)
 		currentDirection = 'south';
 
 //-------------------------------------------------------------------------
@@ -226,7 +226,7 @@ function keydown(ev) {
 						case KEY.ESC:      pause = !pause;          handled = true; show('pause'); break;
 						case KEY.PUp1:   if (powerupOne)	{activatePowerupOne();}     handled = true; break;
 						case KEY.PUp2:   if (powerupTwo) 	{activatePowerupTwo();}     handled = true; break;
-						case KEY.PUp3:   if (powerupThree) 	{activatePowerupThree();}	handled = true; break; 
+						case KEY.PUp3:   if (powerupThree) 	{activatePowerupThree();}	handled = true; break;
 					} break;
 					case 'west':
 					switch(ev.keyCode) {
@@ -464,7 +464,7 @@ function drawCourt() {
 					drawBlock(ctx, x, y, block.color);
 			}
 		}
-		ctx.strokeStyle="#aaaaaa";
+		ctx.strokeStyle="#FFFFFF";
 		ctx.strokeRect(0, 0, nx*dx - 1, ny*dy - 1); // court boundary
 		invalid.court = false;
 	}

@@ -133,9 +133,9 @@ function unoccupied(type, x, y, dir) {
 var pieces = [];
 function randomPiece() {
 	if (pieces.length == 0)
-	pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
+	//pieces = [i,i,i,i,j,j,j,j,l,l,l,l,o,o,o,o,s,s,s,s,t,t,t,t,z,z,z,z];
 	//pieces = [o,o,o,o,l,l,l,l];
-	//pieces = [o,o,o,o];
+	pieces = [o,o,o,o];
 	var type = pieces.splice(random(0, pieces.length-1), 1)[0];
 	return { type: type, dir: DIR.UP, x: Math.round(random(0, nx - type.size)), y: 0 };
 }
@@ -289,9 +289,9 @@ function reset() {
 	powerupTwo = false;
 	powerupThree = false;
 	prows = 0;
-	resetMultiplier;
+	resetMultiplier();
 	ptracker = 0;
-	resetSlow;
+	resetSlow();
 	powerupOffline("powerupX2");
 	powerupOffline("powerupSlow");
 	powerupOffline("powerupMercy");
@@ -332,7 +332,7 @@ function move(dir) {
 		current.x = x;
 		current.y = y;
 		invalidate();
-		var softTick = new Audio("/soft-tick.wav"); // buffers automatically when created
+		var softTick = new Audio("audio/soft-tick.wav"); // buffers automatically when created
 		softTick.play();
 		return true;
 	}
@@ -368,7 +368,7 @@ function dropPiece() {
 	eachblock(current.type, current.x, current.y, current.dir, function(x, y) {
 		setBlock(x, y, current.type);
 	});
-	var piecePlaced = new Audio("/piece-in-place.wav"); // buffers automatically when created
+	var piecePlaced = new Audio("audio/piece-in-place.wav"); // buffers automatically when created
 	piecePlaced.play();
 
 	//set next direction
@@ -376,18 +376,22 @@ function dropPiece() {
 		case 'south':
 			ctx = eastCtx;
 			currentDirection = 'east';
+			html("direction", "East");
 			break;
 		case 'east':
 			ctx = northCtx;
 			currentDirection = 'north';
+			html("direction", "North");
 			break;
 		case 'north':
 			ctx = westCtx;
 			currentDirection = 'west';
+			html("direction", "West");
 			break;
 		case 'west':
 			ctx = canvas.getContext('2d');
 			currentDirection = 'south';
+			html("direction", "South");
 			break;
 	}
 	//ctx = eastCtx;
@@ -426,7 +430,7 @@ function removeLine(n) {
 			setBlock(x, y, (y == 0) ? null : getBlock(x, y-1));
 	}
 	addPRow();
-	var clearedSound = new Audio("/line-cleared.wav"); // buffers automatically when created
+	var clearedSound = new Audio("audio/line-cleared.wav"); // buffers automatically when created
 	clearedSound.play();
 }
 
@@ -518,12 +522,12 @@ function checkPowerup() {
 			case 1:
 				if (!powerupOne) {
 					powerupOne = true;
-					togglePowerupAvailable("powerupX2");
+					togglePowerupAvailable("powerupSlow");
 				} break;
 			case 2:
 				if (!powerupTwo) {
 					powerupTwo = true;
-					togglePowerupAvailable("powerupSlow");
+					togglePowerupAvailable("powerupX2");
 				} break;
 			case 3:
 				if (!powerupThree) {
@@ -542,12 +546,12 @@ function resetMultiplier() {
 }
 
 function activatePowerupOne() {
-	multiplier = 2;
-	delay = 15000; //15 seconds
-	// set timeout (delay) then change multiplier back to 1
-	setTimeout(resetMultiplier, delay);
+	slow = 2;
+	addRows(0); //updates drop speed
 	powerupOne = false;
-	togglePowerupAvailable("powerupX2");
+	delay = 15000;
+	setTimeout(resetSlow, delay)
+	togglePowerupAvailable("powerupSlow");
 }
 
 function resetSlow() {
@@ -556,12 +560,12 @@ function resetSlow() {
 }
 
 function activatePowerupTwo() {
-	slow = 2;
-	addRows(0);
+	multiplier = 2;
+	delay = 15000; //15 seconds
+	// set timeout (delay) then change multiplier back to 1
+	setTimeout(resetMultiplier, delay);
 	powerupTwo = false;
-	delay = 15000;
-	setTimeout(resetSlow, delay)
-	togglePowerupAvailable("powerupSlow");
+	togglePowerupAvailable("powerupX2");
 }
 
 function resetPieces() {
@@ -589,10 +593,10 @@ function powerupOnline(powerupx) {
 
 function togglePowerupAvailable(powerupx) {
 	var powerupAvailability;
-	if (powerupx == "powerupX2") {
+	if (powerupx == "powerupSlow") {
 		powerupAvailability = powerupOne;
 	}
-	else if (powerupx == "powerupSlow") {
+	else if (powerupx == "powerupX2") {
 		powerupAvailability = powerupTwo;
 	}
 	else if (powerupx == "powerupMercy") {

@@ -26,6 +26,7 @@ if (!window.requestAnimationFrame) { // http://paulirish.com/2011/requestanimati
 //-------------------------------------------------------------------------
 
 //var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, PUp1: 49, PUp2: 50, PUp3: 51, R: 82, ENTER: 13}, //PUp1 is '1' key; PUp2 is '2' key; PUp3 is '3'; R is rotate
+//var KEY     = { ESC: 27, SPACE: 32, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40, P: 80, PUp1: 49, PUp2: 50, PUp3: 51, R: 82, ENTER: 13}, //PUp1 is '1' key; PUp2 is '2' key; PUp3 is '3'; R is rotate
 var KEY     = { ESC: 27, SPACE: 32, W: 87, A: 65, S: 83, D: 68, P: 80, PUp1: 49, PUp2: 50, PUp3: 51, ENTER: 13}, //W A S D movement key code set
 		DIR     = { UP: 0, RIGHT: 1, DOWN: 2, LEFT: 3, MIN: 0, MAX: 3 },
 		// stats   = new Stats(),

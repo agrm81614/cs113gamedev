@@ -3,8 +3,8 @@
 //-------------------------------------------------------------------------
 
 function get(id)        { return document.getElementById(id);  }
-function hide(id)       { get(id).style.visibility = 'hidden'; }
-function show(id)       { get(id).style.visibility = null;     }
+function hide(id)       { get(id).style.display = 'none'; }
+function show(id)       { get(id).style.display = 'inline-block';     }
 function html(id, html) { get(id).innerHTML = html;            }
 
 function timestamp()           { return new Date().getTime();                             }

@@ -45,11 +45,10 @@ h1{
 }
 
 #menu {
-    /*display: inline-block;*/
+    display: inline-block;
     vertical-align: top;
     position: relative;
     width: 200px;
-    margin-bottom: -100px;
 }
 
 #stats {

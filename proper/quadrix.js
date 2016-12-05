@@ -557,6 +557,9 @@ function resetMultiplier() {
 }
 
 function activatePowerupOne() {
+	var powerUpActivated = new Audio("audio/powerup-activated.wav");
+	powerUpActivated.play();
+
 	slow = 2;
 	addRows(0); //updates drop speed
 	powerupOne = false;
@@ -571,6 +574,9 @@ function resetSlow() {
 }
 
 function activatePowerupTwo() {
+	var powerUpActivated = new Audio("audio/powerup-activated.wav");
+	powerUpActivated.play();
+
 	multiplier = 2;
 	delay = 15000; //15 seconds
 	// set timeout (delay) then change multiplier back to 1
@@ -585,6 +591,9 @@ function resetPieces() {
 }
 
 function activatePowerupThree() {
+	var powerUpActivated = new Audio("audio/powerup-activated.wav");
+	powerUpActivated.play();
+
 	pieces = [o,o,o,o,i,i,i,i];
 	powerupThree = false;
 	delay = 15000;
@@ -600,6 +609,9 @@ function powerupOffline(powerupx) {
 function powerupOnline(powerupx) {
 		document.getElementById(powerupx).innerHTML = "Available";
 		document.getElementById(powerupx).style.color = "lightblue";
+		
+		var powerUpReady = new Audio("audio/powerup-ready.wav");
+		powerUpReady.play();
 }
 
 function togglePowerupAvailable(powerupx) {

@@ -7,4 +7,4 @@
 
 * ### [Logo w/ Modifications](https://www.vecteezy.com/vector-art/117341-free-gaming-joystick-sticker-icons)
 
-* ### [Tachyons CSS Framework](https://tachyons.io/)
+* ### [Tachyons CSS Framework](http://tachyons.io/)
